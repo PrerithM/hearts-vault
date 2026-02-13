@@ -55,14 +55,13 @@ URL: https://hearts-vault-api.YOUR-NAMESPACE.workers.dev
 
 ### 5. Update Frontend API Endpoint
 
-Edit `frontend/script.js`, line 11:
+Edit `script.js`, line 14:
 
 ```javascript
 // BEFORE:
-const API_ENDPOINT =
-  "https://hearts-vault-api.84f629d8c780bdf50e8f170de72e5deb.workers.dev/submit";
+const API_ENDPOINT = "https://hearts-vault-api.prerithm87.workers.dev";
 
-// AFTER (use your actual Worker URL):
+// AFTER (use your actual Worker URL + /submit):
 const API_ENDPOINT =
   "https://hearts-vault-api.YOUR-NAMESPACE.workers.dev/submit";
 ```
@@ -81,7 +80,7 @@ Then:
 1. Go to GitHub repository → **Settings** → **Pages**
 2. Source: **Deploy from a branch**
 3. Branch: **main**
-4. Folder: **/frontend**
+4. Folder: **/(root)**
 5. Click **Save**
 
 Wait 1-2 minutes for deployment.
@@ -104,6 +103,8 @@ https://PrerithM.github.io/hearts-vault
 **Verify database**:
 
 ```bash
+# Run from worker directory
+cd worker
 wrangler d1 execute hearts-vault-db --command="SELECT COUNT(*) FROM submissions"
 ```
 
@@ -119,8 +120,8 @@ Should show count > 0 after test submission.
 
 **Solution**: Ensure Worker CORS allows GitHub Pages origin:
 
-- Check `worker/worker.js` line 13: `const ALLOWED_ORIGIN = 'https://PrerithM.github.io';`
-- Redeploy Worker: `wrangler deploy`
+- Check `worker/worker.js` line 15: `const ALLOWED_ORIGIN = 'https://PrerithM.github.io';`
+- Redeploy Worker: `cd worker && wrangler deploy`
 
 ### Issue: API Endpoint Not Found (404)
 
@@ -128,8 +129,8 @@ Should show count > 0 after test submission.
 
 **Solution**:
 
-1. Verify Worker URL matches `frontend/script.js` line 11
-2. Check Worker is deployed: `wrangler deployments list`
+1. Verify Worker URL matches `script.js` line 14
+2. Check Worker is deployed: `cd worker && wrangler deployments list`
 
 ### Issue: Database Not Found
 
@@ -138,8 +139,20 @@ Should show count > 0 after test submission.
 **Solution**: Verify database ID in `wrangler.toml` matches:
 
 ```bash
+# from worker directory
 wrangler d1 list
 ```
+
+### Issue: Cloudflare Dashboard Build Fails
+
+**Problem**: Logs show `[ERROR] Missing entry-point to Worker script`
+
+**Solution**:
+
+1. Go to Cloudflare Dashboard → Workers & Pages → Your Worker → **Settings** → **Build**
+2. Edit **Build Settings**
+3. Set **Root Directory** to: `worker`
+4. Save and Retry Deployment
 
 ---
 
@@ -164,6 +177,7 @@ Before going live:
 ### View Worker Logs
 
 ```bash
+cd worker
 wrangler tail
 ```
 
@@ -172,7 +186,7 @@ Shows live request logs.
 ### View Database
 
 ```bash
-# Count submissions
+# Count submissions (from worker directory)
 wrangler d1 execute hearts-vault-db --command="SELECT COUNT(*) FROM submissions"
 
 # View recent submissions

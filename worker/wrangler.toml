@@ -1,4 +1,5 @@
-name = "hearts-vault-api"
+# worker/wrangler.toml
+name = 'hearts-vault'
 main = "worker.js"
 compatibility_date = "2026-02-13"
 
