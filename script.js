@@ -11,7 +11,7 @@
 // Configuration
 // ===================================================================
 
-const API_ENDPOINT = 'https://hearts-vault-api.prerithm87.workers.dev';
+const API_ENDPOINT = 'https://hearts-vault-api.prerithm87.workers.dev/submit';
 
 // ===================================================================
 // FLAMES Algorithm
