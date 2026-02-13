@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Hearts Vault</title>
+
+  <!-- Apple-like System Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Background Hearts -->
+  <div class="hearts-layer">
+    <span>❤️</span>
+    <span>❤️</span>
+    <span>❤️</span>
+    <span>❤️</span>
+    <span>❤️</span>
+  </div>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <section class="card">
+
+      <h1>Hearts Vault</h1>
+      <p class="subtitle">
+        A private space for meaningful names.
+      </p>
+
+      <form id="nameForm">
+
+        <div class="input-group">
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your name"
+            required
+            autocomplete="off"
+          />
+        </div>
+
+        <button type="submit">
+          Save Name
+        </button>
+
+      </form>
+
+      <div id="statusMessage"></div>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
