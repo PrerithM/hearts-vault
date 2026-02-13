@@ -12,7 +12,7 @@
 // Configuration
 // ===================================================================
 
-const ALLOWED_ORIGIN = 'https://PrerithM.github.io';
+const ALLOWED_ORIGIN = 'https://prerithm.github.io';
 const ALLOWED_RESULTS = ['Friends', 'Love', 'Affection', 'Marriage', 'Enemies', 'Siblings'];
 const MAX_NAME_LENGTH = 200;
 
@@ -85,9 +85,9 @@ function validateSubmission(data) {
  */
 function corsHeaders(origin) {
   // Only allow GitHub Pages origin
-  if (origin === ALLOWED_ORIGIN) {
+  if (origin && origin.toLowerCase() === ALLOWED_ORIGIN) {
     return {
-      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Max-Age': '86400',
@@ -106,7 +106,7 @@ function corsHeaders(origin) {
 function handleOptions(request) {
   const origin = request.headers.get('Origin');
   
-  if (origin === ALLOWED_ORIGIN) {
+  if (origin && origin.toLowerCase() === ALLOWED_ORIGIN) {
     return new Response(null, {
       status: 204,
       headers: corsHeaders(origin),
@@ -189,7 +189,7 @@ async function handleSubmit(request, env) {
   const origin = request.headers.get('Origin');
   
   // CORS check
-  if (origin !== ALLOWED_ORIGIN) {
+  if (!origin || origin.toLowerCase() !== ALLOWED_ORIGIN) {
     return new Response(JSON.stringify({ 
       success: false, 
       error: 'Origin not allowed' 
@@ -311,7 +311,10 @@ export default {
       error: 'Not found',
     }), {
       status: 404,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...corsHeaders(request.headers.get('Origin')),
+      },
     });
   },
 };
