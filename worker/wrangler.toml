@@ -1,0 +1,10 @@
+name = "hearts-vault-api"
+main = "worker.js"
+compatibility_date = "2026-02-13"
+
+account_id = "84f629d8c780bdf50e8f170de72e5deb"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hearts-vault-db"
+database_id = "803025e6-a2e0-4b2e-87b6-7a75b64bebd3"
